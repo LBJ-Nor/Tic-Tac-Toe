@@ -2,7 +2,6 @@
 # Version: beta
 # To-Do: Add win_check
 
-
 import tkinter as tk
 
 move_counter = 0
