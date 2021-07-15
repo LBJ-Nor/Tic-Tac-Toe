@@ -1,4 +1,5 @@
 # Title: Tic-Tac-Toe/Connect Three
+# Version: beta
 # To-Do: Add win_check
 
 
