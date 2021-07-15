@@ -10,7 +10,7 @@ window.title('Tic-Tac-Toe')
 
 
 # return player_piece as string.
-def player_move():
+def player_turn():
     global move_counter
     if move_counter % 2 == 0:
         player_piece = 'X'
@@ -22,7 +22,7 @@ def player_move():
 
 def move_validator(button_pressed):
     if button_pressed.cget('text') == '':
-        button_pressed.config(text=player_move())
+        button_pressed.config(text=player_turn())
     else:
         print('Invalid move!')
 
