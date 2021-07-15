@@ -1,5 +1,5 @@
 # Title: Tic-Tac-Toe/Connect Three
-# Missing win_check
+# To-Do: Add win_check
 
 
 import tkinter as tk
