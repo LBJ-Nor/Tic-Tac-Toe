@@ -8,13 +8,14 @@ move_counter = 0
 win_counter_X = 0
 win_counter_O = 0
 
+# window settings
 window = tk.Tk()
 window.title('Tic-Tac-Toe')
 window.geometry('450x600')
 window.config(bg='#222222')
 
 
-# return player_piece as string.
+# Check and count player turn
 def player_turn():
     global move_counter
     if move_counter % 2 == 0:
@@ -32,18 +33,19 @@ def move_validator(button_pressed):
         print('Invalid move!')
 
 
-# Button frame
+# frame for buttons
 button_frame = tk.Frame(bg='#222222')
 button_frame.pack(side=tk.TOP)
 
 # Game text label
-game_text = tk.Label(bg='#a39c87', width=40, height=10, )
-game_text.pack(side=tk.LEFT)
+game_text = tk.Label(bg='#a39c87', width=60, height=10, )
+game_text.pack(side=tk.TOP)
 
 # Create buttons
 buttons_list = []
 for button in range(9):
-    btn = tk.Button(button_frame, text='',
+    btn = tk.Button(button_frame,
+                    text='',
                     height=2,
                     width=6,
                     bg='#777777',
