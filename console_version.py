@@ -69,7 +69,6 @@ def insert_player_move(player_move):
 
 
 def win_check():
-    global p1_pieces_on_board, p2_pieces_on_board
     for combination in win_conditions:
         if combination.issubset(p1_pieces_on_board) or combination.issubset(p2_pieces_on_board):
             return True
