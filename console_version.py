@@ -1,9 +1,9 @@
 # tic-tac-toe console version
 # To-Do:
-# map for valid move
+# map for valid move - DONE
 # Add win counter, and play again option.
 
-board = [[' ' for _ in range(3)] for _ in range(3)]
+game_board = [[' ' for _ in range(3)] for _ in range(3)]
 valid_moves = [x for x in range(1, 10)]
 p1_piece = 'X'
 p2_piece = 'O'
@@ -17,13 +17,12 @@ win_conditions = [{0, 1, 2}, {3, 4, 5},
                   {0, 4, 8}, {2, 4, 6}]
 
 
-def player_turn():
-    global move_counter
-    if move_counter % 2 == 0:
+def player_turn(move_count):
+    if move_count % 2 == 0:
         player_piece = p1_piece
     else:
         player_piece = p2_piece
-    move_counter += 1
+    move_count += 1
     return player_piece
 
 
@@ -45,7 +44,7 @@ def get_player_move():
     player_pick = 0
     while player_pick not in valid_moves:
         try:
-            player_pick = int(input('Choose 1-9: '))
+            player_pick = int(input(' 1 2 3 \n 4 5 6 \n 7 8 9 \nChoose 1-9: '))
             if player_pick not in valid_moves:
                 raise ValueError
         except ValueError:
@@ -53,15 +52,14 @@ def get_player_move():
     return player_pick
 
 
-def insert_player_move(player_move):
-    global board, p1_pieces_on_board, p2_pieces_on_board
+def insert_player_move(player_move, p1_board_pieces, p2_board_pieces):
     # Using math to find correct index.
-    if board[(((player_move + 2) // 3) - 1)][(player_move % 3) - 1] == ' ':
-        board[(((player_move + 2) // 3) - 1)][(player_move % 3) - 1] = current_player
+    if game_board[(((player_move + 2) // 3) - 1)][(player_move % 3) - 1] == ' ':
+        game_board[(((player_move + 2) // 3) - 1)][(player_move % 3) - 1] = current_player
         if current_player == p1_piece:
-            p1_pieces_on_board.add(player_move - 1)
+            p1_board_pieces.add(player_move - 1)
         if current_player == p2_piece:
-            p2_pieces_on_board.add(player_move - 1)
+            p2_board_pieces.add(player_move - 1)
         return True
     else:
         print('Invalid move! Something has already been placed there.')
@@ -76,14 +74,15 @@ def win_check():
 
 # game loop
 if __name__ == '__main__':
-    print(display_board(board))
+    print(display_board(game_board))
 
     for _ in range(9):
-        current_player = player_turn()
+        current_player = player_turn(move_counter)
+        move_counter += 1
         current_player_move = get_player_move()
-        while not insert_player_move(current_player_move):
+        while not insert_player_move(current_player_move, p1_pieces_on_board, p2_pieces_on_board):
             current_player_move = get_player_move()
-        print(display_board(board))
+        print(display_board(game_board))
         if win_check():
             print(current_player, 'wins!')
             break
