@@ -75,9 +75,6 @@ def get_player_move():
 
 def insert_player_move(player_move, p1_board_pieces, p2_board_pieces):
     """Returns true if move is valid"""
-    # if game_board[((player_move + 2) // 3) - 1][(player_move % 3) - 1] == ' ':
-    #     game_board[((player_move + 2) // 3) - 1][(player_move % 3) - 1] = current_player
-
     x, y = move_to_board_dict[player_move]
     if game_board[x][y] == ' ':
         game_board[x][y] = current_player
