@@ -67,6 +67,8 @@ def get_player_move():
             if player_pick not in valid_moves:
                 raise ValueError
         except ValueError:
+            print(display_board(map_board))
+            print(display_board(game_board))
             print('Try again! Valid moves: 1-9.')
     return player_pick
 
