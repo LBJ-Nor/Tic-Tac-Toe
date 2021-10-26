@@ -3,7 +3,7 @@ Name: tic-tac-toe (console version)
 ToDo:
     Map for valid moves - DONE
     Reverse 1-9 input to match numpad - DONE
-    Add win counter, and play again option.
+    Add win counter, and play again option. - DONE
 
 """
 
@@ -15,14 +15,16 @@ valid_moves = [x for x in range(1, 10)]
 p1_piece = 'X'
 p2_piece = 'O'
 move_counter = 0
-p1_pieces_on_board = set()
-p2_pieces_on_board = set()
+# p1_pieces_on_board = set()
+# p2_pieces_on_board = set()
 win_conditions = [{0, 1, 2}, {3, 4, 5},
                   {6, 7, 8}, {0, 3, 6},
                   {1, 4, 7}, {2, 5, 8},
                   {0, 4, 8}, {2, 4, 6}]
+p1_score = 0
+p2_score = 0
 
-# To match board numpad
+# To match board with numpad layout
 map_board.reverse()
 
 # dict to match input with numpad layout
@@ -39,7 +41,6 @@ def player_turn(move_count):
         player_piece = p1_piece
     else:
         player_piece = p2_piece
-    move_count += 1
     return player_piece
 
 
@@ -57,8 +58,8 @@ def display_board(board_2d):
     return text
 
 
-def get_player_move():
-    """Complains until a valid move is returned as int"""
+def get_player_move() -> int: 
+    """Complains until a valid move is returned"""
     player_pick = 0
     while player_pick not in valid_moves:
         try:
@@ -86,7 +87,9 @@ def insert_player_move(player_move, p1_board_pieces, p2_board_pieces):
         return True
     else:
         print('Invalid move! Something has already been placed there.')
+        print(display_board(map_board))
         print(display_board(game_board))
+
 
 
 def win_check():
@@ -98,20 +101,48 @@ def win_check():
 
 # game loop
 if __name__ == '__main__':
+    play_again = ''
     move_counter += ran.choice((0, 1))
-    print(display_board(map_board))
+    while play_again != 'no':
+        play_again = ''
+        p1_pieces_on_board = set()
+        p2_pieces_on_board = set()
+        game_board = [[' ' for _ in range(3)] for _ in range(3)]
 
-    for _ in range(9):
-        current_player = player_turn(move_counter)
-        move_counter += 1
-        current_player_move = get_player_move()
-        while not insert_player_move(current_player_move, p1_pieces_on_board, p2_pieces_on_board):
-            current_player_move = get_player_move()
+        # move_counter += ran.choice((0, 1))
         print(display_board(map_board))
-        print(display_board(game_board))
-        if win_check():
-            print(current_player, 'wins!')
-            break
-    print('Game finished!')
-    if not win_check():
-        print('Draw!')
+
+        for _ in range(9):
+            current_player = player_turn(move_counter)
+            move_counter += 1
+            current_player_move = get_player_move()
+            while not insert_player_move(current_player_move, p1_pieces_on_board, p2_pieces_on_board):
+                current_player_move = get_player_move()
+            print(display_board(map_board))
+            print(display_board(game_board))
+            if win_check():
+                print(f'Player "{current_player}", wins!')
+                if current_player == p1_piece:
+                    p1_score +=1
+                else:
+                    p2_score +=1    
+                break
+
+        if not win_check():
+            print('Draw!')
+        # print('Game finished!')
+        print('Score:')
+        print(f'''"{p1_piece}": {p1_score}\n"{p2_piece}": {p2_score} ''')
+
+
+        while play_again not in ('yes', 'no'):
+            play_again = input('Want to play again? yes/no\n').lower().strip()
+            if play_again not in ('yes', 'no'):
+                print('Invalid choice! Try again.')
+    print(
+        f'''The final score is:
+    {p1_piece}: {p1_score}
+    {p2_piece}: {p2_score}\n'''
+        )
+
+
